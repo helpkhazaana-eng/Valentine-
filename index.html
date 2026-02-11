@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  height:100vh;
+  font-family:'Segoe UI',sans-serif;
+  background:radial-gradient(circle at top,#fff7fb,#eef3ff);
+  overflow:hidden;
+}
+
+/* FLOATING HEARTS */
+.float{
+  position:absolute;
+  font-size:16px;
+  opacity:.35;
+  animation:float 7s linear infinite;
+  pointer-events:none;
+}
+@keyframes float{
+  from{transform:translateY(110vh)}
+  to{transform:translateY(-10vh)}
+}
+
+/* BURST */
+.burst{
+  position:absolute;
+  font-size:18px;
+  animation:burst 1s ease-out forwards;
+  pointer-events:none;
+}
+@keyframes burst{
+  to{transform:translate(var(--x),var(--y));opacity:0}
+}
+
+/* ===== HEAVEN GATE ===== */
+.gate{
+  position:absolute;
+  inset:0;
+  margin:auto;
+  width:320px;
+  height:520px;
+  perspective:1200px;
+}
+.gate-title{
+  position:absolute;
+  top:-40px;
+  width:100%;
+  text-align:center;
+  font-size:16px;
+  font-weight:700;
+  color:#ff4d6d;
+  text-shadow:0 0 18px rgba(255,150,180,.7);
+}
+.halo{
+  position:absolute;
+  inset:-20px;
+  background:radial-gradient(circle,
+    rgba(255,215,140,.9),
+    rgba(255,200,120,.6),
+    transparent 70%);
+  filter:blur(28px);
+}
+.heaven-door{
+  position:absolute;
+  top:0;
+  width:50%;
+  height:100%;
+  background:linear-gradient(145deg,#fff,#f6f8ff);
+  border-radius:18px;
+  box-shadow:
+    inset 0 0 40px rgba(255,215,140,.35),
+    0 25px 50px rgba(0,0,0,.25);
+  transition:1.6s cubic-bezier(.25,.8,.25,1);
+}
+.heaven-door::after{
+  content:"";
+  position:absolute;
+  inset:8px;
+  border-radius:14px;
+  border:2px solid rgba(255,210,120,.9);
+}
+.left{left:0;transform-origin:left center}
+.right{right:0;transform-origin:right center}
+.left.open{transform:rotateY(-95deg)}
+.right.open{transform:rotateY(95deg)}
+
+.lock{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:5;
+}
+.lock button{
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  background:#ff4d6d;
+  color:white;
+}
+
+/* ===== QUESTION CARD ===== */
+.app{
+  position:absolute;
+  inset:0;
+  margin:auto;
+  width:320px;
+  min-height:240px;
+  background:linear-gradient(180deg,#ffffff,#fff5fa);
+  border-radius:28px;
+  padding:28px 24px;
+  text-align:center;
+  box-shadow:0 20px 50px rgba(255,77,109,.25);
+  display:none;
+  z-index:6;
+}
+.question{
+  font-size:22px;
+  font-weight:800;
+}
+.no-msg{
+  color:#ff4d6d;
+  height:20px;
+}
+.actions{
+  display:flex;
+  justify-content:space-between;
+  margin-top:16px;
+}
+.btn{
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  border:none;
+  font-size:26px;
+}
+.yes{background:#ff4d6d;color:white}
+.no{background:#eee;color:#999}
+.shake{animation:shake .35s}
+@keyframes shake{
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-6px)}
+  50%{transform:translateX(6px)}
+  75%{transform:translateX(-6px)}
+  100%{transform:translateX(0)}
+}
+.moment{
+  display:none;
+  width:100%;
+  border-radius:16px;
+  margin-top:10px;
+}
+.next{
+  display:none;
+  margin-top:12px;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:30px;
+  background:#ff4d6d;
+  color:white;
+}
+
+/* ===== MATCH ===== */
+.match{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle,#fff0f6,#fdecef);
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+}
+.heart{
+  font-size:130px;
+  cursor:pointer;
+  animation:floatHeart 3s ease-in-out infinite;
+}
+@keyframes floatHeart{
+  50%{transform:translateY(-16px)}
+}
+.photo{
+  display:none;
+  width:260px;
+  border-radius:22px;
+  margin-top:10px;
+  cursor:pointer;
+  transition:1s;
+}
+.photo.show{display:block}
+.photo.flip{transform:rotateY(180deg) scale(.7);opacity:0}
+
+/* ===== SCRATCH (FINAL FIX) ===== */
+.scratch{
+  display:none;
+}
+.scratch.active{
+  position:fixed;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background:radial-gradient(circle,#fff5fa,#fdecef);
+  z-index:999;
+}
+.cards{
+  display:flex;
+  gap:18px;
+  margin-top:18px;
+}
+.card{
+  width:90px;
+  height:90px;
+  background:#ff4d6d;
+  clip-path:path("M45 15 C45 0 0 0 0 30 C0 55 45 80 45 80 C45 80 90 55 90 30 C90 0 45 0 45 15 Z");
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+.card.big{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(2.4);
+  z-index:1000;
+}
+.card.revealed{
+  background:white;
+  color:#ff4d6d;
+  border:2px solid #ff4d6d;
+}
+</style>
+</head>
+
+<body>
+
+<script>
+/* FLOATING HEARTS */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="float";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"%";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),8000);
+},350);
+</script>
+
+<div class="gate" id="gate">
+  <div class="gate-title">Your Valentine is waiting inside 💖</div>
+  <div class="halo"></div>
+  <div class="heaven-door left" id="leftDoor"></div>
+  <div class="heaven-door right" id="rightDoor"></div>
+
+  <div class="lock">
+    <button onclick="openGate()">Unlock 🔐</button>
+  </div>
+
+  <div class="app" id="app">
+    <div class="question" id="question"></div>
+    <div class="no-msg" id="noMsg"></div>
+    <div class="actions">
+      <button class="btn no" onclick="noClick()">❌</button>
+      <button class="btn yes" onclick="yesClick()">❤️</button>
+    </div>
+    <img id="moment" class="moment">
+    <button class="next" id="nextBtn" onclick="nextQuestion()">Next 💕</button>
+  </div>
+</div>
+
+<div class="match" id="match">
+  <h2 style="color:#ff4d6d">✨ IT’S A MATCH ✨</h2>
+  <p>Crack the heart to see your match 💖</p>
+
+  <div id="heart" class="heart" onclick="tapHeart()">❤️</div>
+  <div id="crackMsg"></div>
+
+  <img src="final.png" id="photo" class="photo">
+  <div id="tapPhoto" style="display:none;color:#ff4d6d">
+    Tap the photo for surprise 💝
+  </div>
+
+  <div class="scratch" id="scratch">
+    <h3 style="color:#ff4d6d">Scratch any one ❤️</h3>
+    <div class="cards">
+      <div class="card" onclick="reveal(this,'💸 ₹1000 Shopping')">❤️</div>
+      <div class="card" onclick="reveal(this,'👗 Buy a suit')">❤️</div>
+      <div class="card" onclick="reveal(this,'🤡 Naseeb main gobar likha hai')">❤️</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions=[
+ "Will you be my Valentine? 💕",
+ "Will you stop fighting with me? 😄",
+ "Will you be with me forever? 🥺❤️"
+];
+const images=["img1.png","img2.png","img3.png"];
+const noMessages=[
+ "chup chap YES daba 😤❤️",
+ "khane bhar ka de denge 😠👊",
+ "kesi kar rahi ho ji 🥺💗"
+];
+let q=0,taps=0;
+
+function openGate(){
+  leftDoor.classList.add("open");
+  rightDoor.classList.add("open");
+  setTimeout(()=>{
+    document.querySelector('.lock').style.display="none";
+    app.style.display="block";
+    question.innerText=questions[q];
+  },1200);
+}
+
+function yesClick(){
+  noMsg.innerText="";
+  moment.src=images[q];
+  moment.style.display="block";
+  nextBtn.style.display="block";
+  heartBurst();
+}
+
+function noClick(){
+  app.classList.remove("shake");
+  void app.offsetWidth;
+  app.classList.add("shake");
+  noMsg.innerText=noMessages[q];
+}
+
+function nextQuestion(){
+  q++;
+  moment.style.display="none";
+  nextBtn.style.display="none";
+  noMsg.innerText="";
+  if(q<questions.length){
+    question.innerText=questions[q];
+  }else{
+    gate.remove();
+    match.style.display="flex";
+  }
+}
+
+function heartBurst(){
+  for(let i=0;i<18;i++){
+    const b=document.createElement("div");
+    b.className="burst";
+    b.innerHTML="❤️";
+    b.style.left="50%";
+    b.style.top="50%";
+    b.style.setProperty("--x",(Math.random()*200-100)+"px");
+    b.style.setProperty("--y",(Math.random()*-200)+"px");
+    document.body.appendChild(b);
+    setTimeout(()=>b.remove(),1000);
+  }
+}
+
+function tapHeart(){
+  taps++;
+  if(taps===1) crackMsg.innerText="Arre ruk ja 😏";
+  if(taps===2){crackMsg.innerText="Bas bas 😌";heart.innerText="💔";}
+  if(taps===3){
+    crackMsg.innerText="Surprise 💖";
+    photo.classList.add("show");
+    tapPhoto.style.display="block";
+  }
+}
+
+photo.onclick=()=>{
+  photo.classList.add("flip");
+  tapPhoto.style.display="none";
+  setTimeout(()=>{
+    heart.style.display="none";
+    crackMsg.style.display="none";
+    photo.style.display="none";
+    scratch.classList.add("active");
+  },900);
+}
+
+function reveal(el,text){
+  document.querySelectorAll('.float').forEach(h=>h.remove());
+  document.querySelectorAll('.card').forEach(c=>{
+    if(c!==el)c.style.display="none";
+  });
+  document.querySelector('.scratch h3').style.display="none";
+
+  el.classList.add("big","revealed");
+  el.innerText=text;
+
+  for(let i=0;i<20;i++){
+    const b=document.createElement("div");
+    b.className="burst";
+    b.innerHTML="❤️";
+    b.style.left="50%";
+    b.style.top="50%";
+    b.style.setProperty("--x",(Math.random()*300-150)+"px");
+    b.style.setProperty("--y",(Math.random()*-300)+"px");
+    document.body.appendChild(b);
+    setTimeout(()=>b.remove(),1000);
+  }
+}
+</script>
+
+</body>
+</html>
