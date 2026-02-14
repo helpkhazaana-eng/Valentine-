@@ -13,6 +13,7 @@ body{
   font-family:'Segoe UI',sans-serif;
   background:radial-gradient(circle at top,#fff7fb,#eef3ff);
   overflow:hidden;
+  text-align:center;
 }
 
 /* FLOATING HEARTS */
@@ -28,18 +29,7 @@ body{
   to{transform:translateY(-10vh)}
 }
 
-/* BURST */
-.burst{
-  position:absolute;
-  font-size:18px;
-  animation:burst 1s ease-out forwards;
-  pointer-events:none;
-}
-@keyframes burst{
-  to{transform:translate(var(--x),var(--y));opacity:0}
-}
-
-/* ===== HEAVEN GATE ===== */
+/* ===== GATE ===== */
 .gate{
   position:absolute;
   inset:0;
@@ -52,42 +42,20 @@ body{
   position:absolute;
   top:-40px;
   width:100%;
-  text-align:center;
   font-size:16px;
   font-weight:700;
   color:#ff4d6d;
-  text-shadow:0 0 18px rgba(255,150,180,.7);
-}
-.halo{
-  position:absolute;
-  inset:-20px;
-  background:radial-gradient(circle,
-    rgba(255,215,140,.9),
-    rgba(255,200,120,.6),
-    transparent 70%);
-  filter:blur(28px);
 }
 .heaven-door{
   position:absolute;
-  top:0;
   width:50%;
   height:100%;
-  background:linear-gradient(145deg,#fff,#f6f8ff);
+  background:#fff;
   border-radius:18px;
-  box-shadow:
-    inset 0 0 40px rgba(255,215,140,.35),
-    0 25px 50px rgba(0,0,0,.25);
-  transition:1.6s cubic-bezier(.25,.8,.25,1);
+  transition:1.6s;
 }
-.heaven-door::after{
-  content:"";
-  position:absolute;
-  inset:8px;
-  border-radius:14px;
-  border:2px solid rgba(255,210,120,.9);
-}
-.left{left:0;transform-origin:left center}
-.right{right:0;transform-origin:right center}
+.left{left:0;transform-origin:left}
+.right{right:0;transform-origin:right}
 .left.open{transform:rotateY(-95deg)}
 .right.open{transform:rotateY(95deg)}
 
@@ -95,9 +63,8 @@ body{
   position:absolute;
   inset:0;
   display:flex;
-  justify-content:center;
   align-items:center;
-  z-index:5;
+  justify-content:center;
 }
 .lock button{
   padding:12px 30px;
@@ -107,115 +74,80 @@ body{
   color:white;
 }
 
-/* ===== QUESTION CARD ===== */
+/* QUESTIONS */
 .app{
   position:absolute;
   inset:0;
   margin:auto;
   width:320px;
-  min-height:240px;
-  background:linear-gradient(180deg,#ffffff,#fff5fa);
+  background:#fff;
   border-radius:28px;
-  padding:28px 24px;
-  text-align:center;
-  box-shadow:0 20px 50px rgba(255,77,109,.25);
+  padding:24px;
   display:none;
-  z-index:6;
 }
-.question{
-  font-size:22px;
-  font-weight:800;
-}
-.no-msg{
-  color:#ff4d6d;
-  height:20px;
-}
-.actions{
-  display:flex;
-  justify-content:space-between;
-  margin-top:16px;
-}
+.question{font-size:22px;font-weight:800}
+.no-msg{color:#ff4d6d;height:20px}
+.actions{display:flex;justify-content:space-between;margin-top:14px}
 .btn{
-  width:64px;
-  height:64px;
-  border-radius:50%;
-  border:none;
-  font-size:26px;
+  width:64px;height:64px;border-radius:50%;border:none;font-size:26px;
 }
 .yes{background:#ff4d6d;color:white}
-.no{background:#eee;color:#999}
-.shake{animation:shake .35s}
-@keyframes shake{
-  0%{transform:translateX(0)}
-  25%{transform:translateX(-6px)}
-  50%{transform:translateX(6px)}
-  75%{transform:translateX(-6px)}
-  100%{transform:translateX(0)}
-}
-.moment{
-  display:none;
-  width:100%;
-  border-radius:16px;
-  margin-top:10px;
-}
+.no{background:#eee}
+.moment{display:none;width:100%;border-radius:16px;margin-top:10px}
 .next{
-  display:none;
-  margin-top:12px;
-  width:100%;
-  padding:10px;
-  border:none;
-  border-radius:30px;
-  background:#ff4d6d;
-  color:white;
+  display:none;margin-top:10px;width:100%;
+  padding:10px;border:none;border-radius:30px;
+  background:#ff4d6d;color:white;
 }
 
-/* ===== MATCH ===== */
+/* MATCH */
 .match{
   position:fixed;
   inset:0;
-  background:radial-gradient(circle,#fff0f6,#fdecef);
+  background:#fff0f6;
   display:none;
   flex-direction:column;
   align-items:center;
-  text-align:center;
+  justify-content:center;
 }
 .heart{
   font-size:130px;
   cursor:pointer;
-  animation:floatHeart 3s ease-in-out infinite;
 }
-@keyframes floatHeart{
-  50%{transform:translateY(-16px)}
+#crackMsg{
+  height:24px;
+  font-weight:700;
+  color:#ff4d6d;
 }
-.photo{
+
+/* FINAL IMAGE */
+#finalImage{
   display:none;
   width:260px;
   border-radius:22px;
   margin-top:10px;
   cursor:pointer;
-  transition:1s;
 }
-.photo.show{display:block}
-.photo.flip{transform:rotateY(180deg) scale(.7);opacity:0}
-
-/* ===== SCRATCH (FINAL FIX) ===== */
-.scratch{
+#tapImageText{
   display:none;
+  color:#ff4d6d;
+  font-weight:700;
 }
+
+/* SCRATCH */
+.scratch{display:none}
 .scratch.active{
   position:fixed;
   inset:0;
+  background:#fff5fa;
   display:flex;
   flex-direction:column;
-  justify-content:center;
   align-items:center;
-  background:radial-gradient(circle,#fff5fa,#fdecef);
-  z-index:999;
+  justify-content:center;
 }
 .cards{
   display:flex;
   gap:18px;
-  margin-top:18px;
 }
 .card{
   width:90px;
@@ -226,21 +158,49 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:12px;
-  font-weight:700;
   cursor:pointer;
 }
 .card.big{
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%) scale(2.4);
-  z-index:1000;
+  transform:scale(2.6);
+  margin-bottom:20px;
 }
 .card.revealed{
   background:white;
   color:#ff4d6d;
   border:2px solid #ff4d6d;
+}
+
+/* EMERGENCY */
+.emergency{
+  margin-top:20px;
+  padding:14px 26px;
+  font-weight:800;
+  border:none;
+  border-radius:40px;
+  background:#ff0033;
+  color:white;
+  animation:jiggle .9s infinite;
+}
+@keyframes jiggle{
+  20%{transform:translateX(-4px)}
+  40%{transform:translateX(4px)}
+  60%{transform:translateX(-4px)}
+  80%{transform:translateX(4px)}
+}
+
+/* VIDEO */
+.videoWrap{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+video{
+  width:90%;
+  max-width:420px;
+  border-radius:20px;
 }
 </style>
 </head>
@@ -248,7 +208,6 @@ body{
 <body>
 
 <script>
-/* FLOATING HEARTS */
 setInterval(()=>{
   const h=document.createElement("div");
   h.className="float";
@@ -259,9 +218,9 @@ setInterval(()=>{
 },350);
 </script>
 
+<!-- GATE -->
 <div class="gate" id="gate">
-  <div class="gate-title">Your Valentine is waiting inside 💖</div>
-  <div class="halo"></div>
+  <div class="gate-title">Your Valentine is waiting 💖</div>
   <div class="heaven-door left" id="leftDoor"></div>
   <div class="heaven-door right" id="rightDoor"></div>
 
@@ -281,26 +240,32 @@ setInterval(()=>{
   </div>
 </div>
 
+<!-- MATCH -->
 <div class="match" id="match">
-  <h2 style="color:#ff4d6d">✨ IT’S A MATCH ✨</h2>
-  <p>Crack the heart to see your match 💖</p>
-
-  <div id="heart" class="heart" onclick="tapHeart()">❤️</div>
+  <h3>Crack the heart 💖</h3>
   <div id="crackMsg"></div>
+  <div id="heart" class="heart" onclick="tapHeart()">❤️</div>
+  <img src="final.png" id="finalImage">
+  <div id="tapImageText">Tap the photo 💝</div>
+</div>
 
-  <img src="final.png" id="photo" class="photo">
-  <div id="tapPhoto" style="display:none;color:#ff4d6d">
-    Tap the photo for surprise 💝
+<!-- SCRATCH -->
+<div class="scratch" id="scratch">
+  <h3>Scratch any one ❤️</h3>
+  <div class="cards">
+    <div class="card" onclick="reveal(this,'💸 ₹1000 Shopping')">❤️</div>
+    <div class="card" onclick="reveal(this,'👗 Buy a suit')">❤️</div>
+    <div class="card" onclick="reveal(this,'😜 Try again next Valentine')">❤️</div>
   </div>
 
-  <div class="scratch" id="scratch">
-    <h3 style="color:#ff4d6d">Scratch any one ❤️</h3>
-    <div class="cards">
-      <div class="card" onclick="reveal(this,'💸 ₹1000 Shopping')">❤️</div>
-      <div class="card" onclick="reveal(this,'👗 Buy a suit')">❤️</div>
-      <div class="card" onclick="reveal(this,'🤡 Naseeb main gobar likha hai')">❤️</div>
-    </div>
-  </div>
+  <button id="emergencyBtn" class="emergency" style="display:none"
+    onclick="playVideo()">🚨 DUTY BEFORE VALENTINE</button>
+</div>
+
+<div class="videoWrap" id="videoWrap">
+  <video id="finalVideo" controls autoplay>
+    <source src="duty.mp4" type="video/mp4">
+  </video>
 </div>
 
 <script>
@@ -310,11 +275,8 @@ const questions=[
  "Will you be with me forever? 🥺❤️"
 ];
 const images=["img1.png","img2.png","img3.png"];
-const noMessages=[
- "chup chap YES daba 😤❤️",
- "khane bhar ka de denge 😠👊",
- "kesi kar rahi ho ji 🥺💗"
-];
+const noMessages=["YES daba 😤","Accha bachi ban ja 😌","Soch lo ache se 🥺"];
+
 let q=0,taps=0;
 
 function openGate(){
@@ -328,90 +290,65 @@ function openGate(){
 }
 
 function yesClick(){
-  noMsg.innerText="";
   moment.src=images[q];
   moment.style.display="block";
   nextBtn.style.display="block";
-  heartBurst();
 }
 
-function noClick(){
-  app.classList.remove("shake");
-  void app.offsetWidth;
-  app.classList.add("shake");
-  noMsg.innerText=noMessages[q];
-}
+function noClick(){ noMsg.innerText=noMessages[q]; }
 
 function nextQuestion(){
   q++;
   moment.style.display="none";
   nextBtn.style.display="none";
   noMsg.innerText="";
-  if(q<questions.length){
-    question.innerText=questions[q];
-  }else{
-    gate.remove();
-    match.style.display="flex";
-  }
+  if(q<questions.length) question.innerText=questions[q];
+  else{ gate.remove(); match.style.display="flex"; }
 }
 
-function heartBurst(){
-  for(let i=0;i<18;i++){
-    const b=document.createElement("div");
-    b.className="burst";
-    b.innerHTML="❤️";
-    b.style.left="50%";
-    b.style.top="50%";
-    b.style.setProperty("--x",(Math.random()*200-100)+"px");
-    b.style.setProperty("--y",(Math.random()*-200)+"px");
-    document.body.appendChild(b);
-    setTimeout(()=>b.remove(),1000);
-  }
-}
-
+/* HEART */
 function tapHeart(){
   taps++;
-  if(taps===1) crackMsg.innerText="Arre ruk ja 😏";
-  if(taps===2){crackMsg.innerText="Bas bas 😌";heart.innerText="💔";}
+
+  if(taps===1){
+    crackMsg.innerText="Arre ruk ja 😏";
+  }
+
+  if(taps===2){
+    crackMsg.innerText="Bas bas 😌";
+    heart.innerText="💔";
+  }
+
   if(taps===3){
-    crackMsg.innerText="Surprise 💖";
-    photo.classList.add("show");
-    tapPhoto.style.display="block";
+    crackMsg.innerText="It’s a match 💖";
+    heart.style.display="none";
+
+    setTimeout(()=>{
+      finalImage.style.display="block";
+      tapImageText.style.display="block";
+    },500);
   }
 }
 
-photo.onclick=()=>{
-  photo.classList.add("flip");
-  tapPhoto.style.display="none";
-  setTimeout(()=>{
-    heart.style.display="none";
-    crackMsg.style.display="none";
-    photo.style.display="none";
-    scratch.classList.add("active");
-  },900);
-}
+
+finalImage.onclick=()=>{
+  match.style.display="none";
+  scratch.classList.add("active");
+};
 
 function reveal(el,text){
-  document.querySelectorAll('.float').forEach(h=>h.remove());
   document.querySelectorAll('.card').forEach(c=>{
-    if(c!==el)c.style.display="none";
+    if(c!==el) c.style.display="none";
   });
-  document.querySelector('.scratch h3').style.display="none";
-
   el.classList.add("big","revealed");
   el.innerText=text;
+  setTimeout(()=>emergencyBtn.style.display="inline-block",800);
+}
 
-  for(let i=0;i<20;i++){
-    const b=document.createElement("div");
-    b.className="burst";
-    b.innerHTML="❤️";
-    b.style.left="50%";
-    b.style.top="50%";
-    b.style.setProperty("--x",(Math.random()*300-150)+"px");
-    b.style.setProperty("--y",(Math.random()*-300)+"px");
-    document.body.appendChild(b);
-    setTimeout(()=>b.remove(),1000);
-  }
+function playVideo(){
+  emergencyBtn.style.display="none";
+  videoWrap.style.display="flex";
+  finalVideo.play();
 }
 </script>
 
